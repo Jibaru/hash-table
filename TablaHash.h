@@ -69,7 +69,7 @@ void TablaHash::agregar(const int llave, const std::string valor){
 void TablaHash::remover(const int llave){
 	int valorHash = funcionHash(llave);
 	
-	std::list<std::pair<int, std::string> > lista = tabla[valorHash];
+	std::list<std::pair<int, std::string> > &lista = tabla[valorHash];
 	
 	bool existeLlave = false;
 	
@@ -88,6 +88,32 @@ void TablaHash::remover(const int llave){
 		std::cout << "Item no encontrado " << std::endl;
 	}
 	return;
+}
+
+std::string TablaHash::buscar(const int llave) {
+
+	int valorHash = funcionHash(llave);
+	
+	std::list<std::pair<int, std::string> > lista = tabla[valorHash];
+	
+	bool existeLlave = false;
+	std::string valor = "";
+	
+	std::list<std::pair<int, std::string> >::const_iterator it = lista.begin();
+	
+	for(; it != lista.end(); it++ ){
+		if(it->first == llave){
+			existeLlave = true;
+			valor = it->second;
+			break;
+		}
+	}
+	
+	if(!existeLlave){
+		std::cout << "Item no encontrado " << std::endl;
+	}
+	
+	return valor;
 }
 
 void TablaHash::imprimir() const {
